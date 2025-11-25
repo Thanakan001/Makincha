@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:background="@drawable/bg_bottomsheet_rounded"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- ปุ่มปิด -->
+        <ImageButton
+            android:id="@+id/btn_close"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_close"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="ปิด"
+            android:layout_gravity="start"/>
+
+        <!-- รูปสินค้า -->
+        <ImageView
+            android:id="@+id/img_product"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/circle_background"
+            android:clipToOutline="true"
+            android:elevation="4dp"/>
+
+        <!-- ราคา -->
+        <TextView
+            android:id="@+id/txt_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/black"
+            android:lineSpacingExtra="4dp"
+            android:letterSpacing="0.02"/>
+
+        <!-- Sweetness -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ระดับความหวาน"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:lineSpacingExtra="4dp"
+            android:letterSpacing="0.02"/>
+
+        <RadioGroup
+            android:id="@+id/radio_sweet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:divider="@android:color/darker_gray"
+            android:showDividers="middle"
+            android:dividerPadding="6dp">
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="หวาน 0%"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:letterSpacing="0.02"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"/>
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="หวานน้อย"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:letterSpacing="0.02"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"/>
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="หวานปกติ"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:letterSpacing="0.02"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"/>
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="หวานจึ้ง"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:letterSpacing="0.02"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"/>
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="โครตหวาน"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:letterSpacing="0.02"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"/>
+        </RadioGroup>
+
+        <!-- Topping -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Topping"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:lineSpacingExtra="4dp"
+            android:letterSpacing="0.02"/>
+
+        <RadioGroup
+            android:id="@+id/radio_topping"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:divider="@android:color/darker_gray"
+            android:showDividers="middle"
+            android:dividerPadding="6dp">
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ไม่ใส่ท็อปปิ้ง (0 บาท)"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:letterSpacing="0.02"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"/>
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ไข่มุก (5 บาท)"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:letterSpacing="0.02"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"/>
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="บุกบราวชูก้า (5 บาท)"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:letterSpacing="0.02"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"/>
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ฟรุตสลัด (5 บาท)"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:letterSpacing="0.02"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"/>
+        </RadioGroup>
+
+        <!-- จำนวนแก้ว -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="จำนวนแก้ว"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:lineSpacingExtra="4dp"
+            android:letterSpacing="0.02"/>
+
+        <EditText
+            android:id="@+id/input_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="กรอกจำนวนแก้ว"
+            android:layout_marginTop="8dp"/>
+
+        <!-- หมายเหตุ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="รายละเอียดเพิ่มเติม"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:lineSpacingExtra="4dp"
+            android:letterSpacing="0.02"/>
+
+        <EditText
+            android:id="@+id/input_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="กรอกหมายเหตุ"
+            android:layout_marginTop="8dp"/>
+
+        <!-- ปุ่มยืนยัน -->
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ยืนยัน"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/green_header_bg"/>
+    </LinearLayout>
+</ScrollView>

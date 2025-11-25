@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fillViewport="true"
+    tools:context=".fragments.HomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/header_background"
+            android:layout_width="0dp"
+            android:layout_height="140dp"
+            android:background="@drawable/bg_gradient_yellow"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/greeting_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hi Noah!"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/welcome_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome to Makincha!"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/greeting_text"
+            app:layout_constraintTop_toBottomOf="@+id/greeting_text" />
+
+        <ImageButton
+            android:id="@+id/favorites_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="รายการโปรด"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_favorite_border"
+            app:tint="@android:color/holo_red_dark"
+            app:layout_constraintBottom_toBottomOf="@+id/welcome_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/greeting_text" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/location_card"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:layout_constraintTop_toBottomOf="@+id/welcome_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
+
+                <ImageView
+                    android:id="@+id/location_icon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_location_on"
+                    app:tint="@color/half_half_medium_green"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:contentDescription="ไอคอนตำแหน่ง" />
+
+                <TextView
+                    android:id="@+id/location_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Home"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/location_icon"
+                    app:layout_constraintEnd_toStartOf="@+id/arrow_icon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <ImageView
+                    android:id="@+id/arrow_icon"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_arrow_forward_ios"
+                    app:tint="@android:color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:contentDescription="ลูกศรขวา" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/service_grid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_rounded_white"
+            app:layout_constraintTop_toBottomOf="@+id/location_card"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:id="@+id/service_row_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/food_container"
+                    style="@style/ServiceButtonContainer"
+                    android:layout_weight="1" >
+                    <ImageView
+                        style="@style/ServiceIcon"
+                        android:src="@drawable/coco_makincha"
+                        android:contentDescription="Food Service" />
+                    <TextView
+                        style="@style/ServiceText"
+                        android:text="โกโก้" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/mart_container"
+                    style="@style/ServiceButtonContainer"
+                    android:layout_weight="1" >
+                    <ImageView
+                        style="@style/ServiceIcon"
+                        android:src="@drawable/nomcumpo_makincha"
+                        android:contentDescription="Mart Service" />
+                    <TextView
+                        style="@style/ServiceText"
+                        android:text="นมชมพู" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/service_row_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginTop="8dp"
+                android:paddingBottom="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/service_row_1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/messenger_container"
+                    style="@style/ServiceButtonContainer"
+                    android:layout_weight="1" >
+                    <ImageView
+                        style="@style/ServiceIcon"
+                        android:src="@drawable/nompurk_makincha"
+                        android:contentDescription="Messenger Service" />
+                    <TextView
+                        style="@style/ServiceText"
+                        android:text="นมเผือก" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/taxi_container"
+                    style="@style/ServiceButtonContainer"
+                    android:layout_weight="1" >
+                    <ImageView
+                        style="@style/ServiceIcon"
+                        android:src="@drawable/coco_makincha"
+                        android:contentDescription="Taxi Service" />
+                    <TextView
+                        style="@style/ServiceText"
+                        android:text="โกโก้" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/packages_container"
+                    style="@style/ServiceButtonContainer"
+                    android:layout_weight="1" >
+                    <ImageView
+                        style="@style/ServiceIcon"
+                        android:src="@drawable/coco_makincha"
+                        android:contentDescription="Packages Service" />
+                    <TextView
+                        style="@style/ServiceText"
+                        android:text="โกโก้" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/top_banner_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:layout_constraintTop_toBottomOf="@+id/service_grid"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/banner_makincha"
+                android:contentDescription="โปรโมชั่นด้านบน" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/bottom_banner_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:layout_constraintTop_toBottomOf="@+id/top_banner_card"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/banner_makincha1"
+                android:contentDescription="โปรโมชั่นด้านล่าง" />
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

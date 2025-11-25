@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="green_primary">#00C300</color>
+    <color name="green_header_bg">#009900</color>
+    <color name="green_light_icon_bg">#E0FFDE</color>
+
+    <color name="background_light">#F8F8F8</color>
+    <color name="gray_icon">#6A6A6A</color>
+    <color name="gray_text">#757575</color>
+
+    <color name="nav_item_selected">#00C300</color>
+    <color name="nav_item_unselected">#AAAAAA</color>
+    <color name="half_half_dark_green">#198754</color>
+    <color name="half_half_medium_green">#28a745</color>
+
+</resources>
