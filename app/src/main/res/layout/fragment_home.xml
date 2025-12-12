@@ -160,7 +160,7 @@
                     android:layout_weight="1" >
                     <ImageView
                         style="@style/ServiceIcon"
-                        android:src="@drawable/nomcumpo_makincha"
+                        android:src="@drawable/nomchompoo"
                         android:contentDescription="Mart Service" />
                     <TextView
                         style="@style/ServiceText"
@@ -186,7 +186,7 @@
                     android:layout_weight="1" >
                     <ImageView
                         style="@style/ServiceIcon"
-                        android:src="@drawable/nompurk_makincha"
+                        android:src="@drawable/nompurk"
                         android:contentDescription="Messenger Service" />
                     <TextView
                         style="@style/ServiceText"

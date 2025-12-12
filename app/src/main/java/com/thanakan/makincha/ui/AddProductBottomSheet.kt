@@ -10,12 +10,13 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.thanakan.makincha.R
+import com.thanakan.makincha.models.CartItem
+import com.thanakan.makincha.models.CartManager
 import com.thanakan.makincha.models.Product
 
 class AddProductBottomSheet(private val product: Product) : BottomSheetDialogFragment() {
 
-    // Callback ส่งข้อมูลกลับไป Fragment
-    var onConfirmClick: ((sweetness: String, topping: String, amount: Int, note: String) -> Unit)? = null
+    var onConfirmClick: ((product: Product, sweetness: String, topping: String, amount: Int, note: String) -> Unit)? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return BottomSheetDialog(requireContext(), theme)
@@ -33,49 +34,61 @@ class AddProductBottomSheet(private val product: Product) : BottomSheetDialogFra
         val imgProduct = view.findViewById<ImageView>(R.id.img_product)
         val txtPrice = view.findViewById<TextView>(R.id.txt_price)
         val btnClose = view.findViewById<ImageButton>(R.id.btn_close)
-
         val radioSweet = view.findViewById<RadioGroup>(R.id.radio_sweet)
         val radioTopping = view.findViewById<RadioGroup>(R.id.radio_topping)
         val inputAmount = view.findViewById<EditText>(R.id.input_amount)
         val inputNote = view.findViewById<EditText>(R.id.input_note)
         val btnConfirm = view.findViewById<Button>(R.id.btn_confirm)
 
-        // แสดงรูปสินค้าและราคา
         if (product.imageResId != 0) imgProduct.setImageResource(product.imageResId)
         else imgProduct.setImageResource(R.drawable.coco_makincha)
         txtPrice.text = "฿ %.2f".format(product.price)
 
-        // ปรับ spacing ให้ข้อความกระจาย
-        fun TextView.applyTextStyle() {
-            this.letterSpacing = 0.02f
-            this.setLineSpacing(6f, 1f)
-        }
-
-        txtPrice.applyTextStyle()
-        (0 until radioSweet.childCount).forEach {
-            (radioSweet.getChildAt(it) as? RadioButton)?.applyTextStyle()
-        }
-        (0 until radioTopping.childCount).forEach {
-            (radioTopping.getChildAt(it) as? RadioButton)?.applyTextStyle()
-        }
-
-        inputAmount.applyTextStyle()
-        inputNote.applyTextStyle()
-
-        // ปุ่มปิด popup
         btnClose.setOnClickListener { dismiss() }
 
-        // ปุ่มยืนยัน
         btnConfirm.setOnClickListener {
             val sweetId = radioSweet.checkedRadioButtonId
             val toppingId = radioTopping.checkedRadioButtonId
+            val amountText = inputAmount.text.toString().trim()
 
-            val sweet = if (sweetId != -1) view.findViewById<RadioButton>(sweetId).text.toString() else ""
-            val topping = if (toppingId != -1) view.findViewById<RadioButton>(toppingId).text.toString() else ""
-            val amount = inputAmount.text.toString().toIntOrNull() ?: 1
+            if (sweetId == -1) {
+                Toast.makeText(requireContext(), "กรุณาเลือกระดับความหวาน", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (toppingId == -1) {
+                Toast.makeText(requireContext(), "กรุณาเลือกท็อปปิ้ง", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (amountText.isEmpty() || amountText.toIntOrNull() == null || amountText.toInt() <= 0) {
+                Toast.makeText(requireContext(), "กรุณากรอกจำนวนแก้วให้ถูกต้อง", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val sweet = view.findViewById<RadioButton>(sweetId).text.toString()
+            val toppingButton = view.findViewById<RadioButton>(toppingId)
+            val topping = toppingButton.text.toString()
+            val amount = amountText.toInt()
             val note = inputNote.text.toString()
 
-            onConfirmClick?.invoke(sweet, topping, amount, note)
+            val toppingPrice = Regex("""\((\d+)\s*บาท\)""")
+                .find(topping)?.groups?.get(1)?.value?.toDouble() ?: 0.0
+
+            val totalPrice = product.price + toppingPrice
+
+            val cartItem = CartItem(
+                productName = product.name,
+                price = totalPrice,
+                sweetness = sweet,
+                topping = topping,
+                toppingPrice = toppingPrice,
+                amount = amount,
+                note = note,
+                imageResId = product.imageResId
+            )
+
+            CartManager.addToCart(cartItem, replaceAmount = true)
+
+            onConfirmClick?.invoke(product, sweet, topping, amount, note)
             dismiss()
         }
 
@@ -90,8 +103,8 @@ class AddProductBottomSheet(private val product: Product) : BottomSheetDialogFra
             bottomSheet?.let { sheet ->
                 val behavior = BottomSheetBehavior.from(sheet)
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
-                behavior.isDraggable = false // popup คงที่ ไม่เลื่อนทั้ง popup
-                sheet.layoutParams.height = (resources.displayMetrics.heightPixels * 0.75).toInt() // สูง 75% ของหน้าจอ
+                behavior.isDraggable = false
+                sheet.layoutParams.height = (resources.displayMetrics.heightPixels * 0.75).toInt()
             }
         }
     }

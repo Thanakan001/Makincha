@@ -3,15 +3,7 @@
     <item
         android:id="@+id/abountFragment"
         android:icon="@drawable/ic_about"
-        android:title="เกี่ยวกับเรา"/>
-    <item
-        android:id="@+id/serviceFragment"
-        android:icon="@drawable/ic_service"
-        android:title="บริการ"/>
-    <item
-        android:id="@+id/settingFragment"
-        android:icon="@drawable/ic_setting"
-        android:title="การตั้งค่า"/>
+        android:title="ประวัติคำสั่งซื้อ"/>
     <item
         android:id="@+id/nav_sigout"
         android:icon="@drawable/ic_signout"

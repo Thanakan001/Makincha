@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_product" />
     <fragment
         android:id="@+id/cartFragment"
-        android:name="com.thanakan.makincha.fragments.CartFragment"
+        android:name="com.thanakan.makincha.ui.CartFragment"
         android:label="ตะกร้าสินค้า"
         tools:layout="@layout/fragment_cart" />
     <fragment
@@ -27,22 +27,12 @@
         tools:layout="@layout/fragment_notification" />
     <fragment
         android:id="@+id/accountFragment"
-        android:name="com.thanakan.makincha.fragments.AccountFragment"
+        android:name="com.thanakan.makincha.fragments.FragmentAccount"
         android:label="หน้าบัญชีของฉัน"
         tools:layout="@layout/fragment_account" />
     <fragment
         android:id="@+id/abountFragment"
-        android:name="com.thanakan.makincha.fragments.AbountFragment"
-        android:label="หน้าเกี่ยวกับเรา"
-        tools:layout="@layout/fragment_abount" />
-    <fragment
-        android:id="@+id/serviceFragment"
-        android:name="com.thanakan.makincha.fragments.ServiceFragment"
-        android:label="หน้าบริการ"
-        tools:layout="@layout/fragment_service" />
-    <fragment
-        android:id="@+id/settingFragment"
-        android:name="com.thanakan.makincha.fragments.SettingFragment"
-        android:label="หน้าตั้งค่า"
-        tools:layout="@layout/fragment_setting"/>
+        android:name="com.thanakan.makincha.fragments.HistoryFragment"
+        android:label="ประวัติคำสั่งซื้อ"
+        tools:layout="@layout/fragment_history" />
 </navigation>

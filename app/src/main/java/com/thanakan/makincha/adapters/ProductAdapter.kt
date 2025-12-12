@@ -42,7 +42,6 @@ class ProductAdapter(private var products: List<Product>) :
             holder.image.setImageResource(R.drawable.coco_makincha)
         }
 
-        // กด + แล้วเรียก callback
         holder.addButton.setOnClickListener {
             onProductAddClick?.invoke(product)
         }

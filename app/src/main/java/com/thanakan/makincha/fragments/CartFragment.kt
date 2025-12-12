@@ -1,60 +1,82 @@
-package com.thanakan.makincha.fragments
+package com.thanakan.makincha.ui
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.thanakan.makincha.R
+import com.thanakan.makincha.adapters.CartAdapter
+import com.thanakan.makincha.models.CartItem
+import com.thanakan.makincha.models.CartManager
+import com.thanakan.makincha.activity.CheckoutActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class CartFragment : BottomSheetDialogFragment() {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CartFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class CartFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var cartRecyclerView: RecyclerView
+    private lateinit var txtTotalPrice: TextView
+    private lateinit var btnCheckout: Button
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val cartList = mutableListOf<CartItem>()
+    private lateinit var cartAdapter: CartAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false)
+    ): View {
+        val view = inflater.inflate(R.layout.fragment_cart, container, false)
+
+        cartRecyclerView = view.findViewById(R.id.cartRecyclerView)
+        txtTotalPrice = view.findViewById(R.id.txtTotalPrice)
+        btnCheckout = view.findViewById(R.id.btnCheckout)
+
+        cartAdapter = CartAdapter(cartList) { updateTotalPrice() }
+        cartRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        cartRecyclerView.adapter = cartAdapter
+
+        loadCartItems()
+
+        btnCheckout.setOnClickListener {
+            if (cartList.isEmpty()) {
+                Toast.makeText(requireContext(), "คุณไม่มีสินค้าอยู่ในตะกร้า", Toast.LENGTH_SHORT).show()
+            } else {
+                goToCheckout()
+            }
+        }
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CartFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CartFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun loadCartItems() {
+        cartList.clear()
+        cartList.addAll(CartManager.getCartItems())
+        cartAdapter.notifyDataSetChanged()
+        updateTotalPrice()
+    }
+
+    private fun updateTotalPrice() {
+        val total = cartList.sumOf { it.totalPrice() }
+        txtTotalPrice.text = "ราคารวม: ฿ %.2f".format(total)
+    }
+
+    private fun goToCheckout() {
+        val intent = Intent(requireContext(), CheckoutActivity::class.java)
+        startActivity(intent)
+
+        dismiss()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadCartItems()
     }
 }
+
+
+

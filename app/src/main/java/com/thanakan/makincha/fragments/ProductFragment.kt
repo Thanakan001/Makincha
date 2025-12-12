@@ -8,8 +8,10 @@ import com.google.android.material.tabs.TabLayout
 import com.thanakan.makincha.R
 import com.thanakan.makincha.databinding.FragmentProductBinding
 import com.thanakan.makincha.adapters.ProductAdapter
+import com.thanakan.makincha.models.CartManager
 import com.thanakan.makincha.models.Product
 import com.thanakan.makincha.ui.AddProductBottomSheet
+import com.thanakan.makincha.ui.CartFragment
 import android.view.View.GONE
 import android.view.View.VISIBLE
 
@@ -19,10 +21,10 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
     private val binding get() = _binding!!
 
     private val categories = listOf("เครื่องดื่ม", "โปรโมชั่น")
-
     private lateinit var productAdapter: ProductAdapter
-
     private val allProducts = getDummyProductData()
+
+    private var cartFragment: CartFragment? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,17 +34,13 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         setupCategoriesTabs()
         setupRecyclerView()
         setupCartButton()
-
+        updateCartFab()
         loadCategoryProducts(categories.first())
     }
 
     private fun setupToolbar() {
-        binding.toolbar.setNavigationOnClickListener {
-            activity?.onBackPressed()
-        }
-
-        binding.searchBar.setOnClickListener {
-        }
+        binding.toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        binding.searchBar.setOnClickListener { /* TODO: search */ }
     }
 
     private fun setupCategoriesTabs() {
@@ -52,8 +50,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
 
         binding.productTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                val category = tab?.text.toString()
-                loadCategoryProducts(category)
+                loadCategoryProducts(tab?.text.toString())
             }
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
@@ -65,92 +62,60 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
         binding.productRecyclerView.adapter = productAdapter
         binding.productRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        // ★ เปิด popup เมื่อกดปุ่ม +
         productAdapter.onProductAddClick = { product ->
             val bottomSheet = AddProductBottomSheet(product)
+            bottomSheet.onConfirmClick = { p, sweet, topping, amount, note ->
+                updateCartFab()
+            }
             bottomSheet.show(childFragmentManager, "AddProductBottomSheet")
         }
     }
 
     private fun setupCartButton() {
         binding.fabCart.setOnClickListener {
+            if (cartFragment == null) cartFragment = CartFragment()
+            cartFragment?.show(childFragmentManager, "CartFragment")
         }
+    }
+
+    private fun updateCartFab() {
+        val count = CartManager.getTotalItemCount()
+        binding.fabCart.text = "ตะกร้า ($count รายการ)"
     }
 
     private fun loadCategoryProducts(category: String) {
         if (category == "เครื่องดื่ม") {
             val drinkProducts = allProducts.filter { it.category == "เครื่องดื่ม" }
             productAdapter.updateData(drinkProducts)
-
             binding.emptyStateContainer.visibility = GONE
             binding.productRecyclerView.visibility = VISIBLE
-
-        } else if (category == "โปรโมชั่น") {
+        } else {
             productAdapter.updateData(emptyList())
-
             binding.productRecyclerView.visibility = GONE
             binding.emptyStateContainer.visibility = VISIBLE
-
             binding.emptyStateText.text = "ไม่มีโปรโมชั่นในตอนนี้"
         }
     }
 
     private fun getDummyProductData(): List<Product> {
         return listOf(
-            Product(
-                id = 1,
-                name = "โกโก้",
-                price = 35.00,
-                description = "เข้มข้น หวานฉ่ำ",
-                imageUrl = "",
-                category = "เครื่องดื่ม",
-                imageResId = R.drawable.coco_makincha
-            ),
-            Product(
-                id = 2,
-                name = "นมชมพู",
-                price = 30.00,
-                description = "หอมนม สดชื่น หวานฉ่ำ",
-                imageUrl = "",
-                category = "เครื่องดื่ม",
-                imageResId = R.drawable.nomcumpo_makincha
-            ),
-            Product(
-                id = 3,
-                name = "นมเผือก",
-                price = 30.00,
-                description = "หวานมัน สนชื่น  สดใส",
-                imageUrl = "",
-                category = "เครื่องดื่ม",
-                imageResId = R.drawable.nompurk_makincha
-            ),
-            Product(
-                id = 4,
-                name = "เอสเปรสโซ่",
-                price = 30.00,
-                description = "ปลุกความเป็นชายในตัวคุณ",
-                imageUrl = "",
-                category = "เครื่องดื่ม",
-                imageResId = R.drawable.espesso_makincha
-            ),
-            Product(
-                id = 5,
-                name = "แอปเปิ้ลโซดา",
-                price = 30.00,
-                description = "ซ่าได้ทุกที่ ซ่าถึงใจ",
-                imageUrl = "",
-                category = "เครื่องดื่ม",
-                imageResId = R.drawable.applesoda_makincha
-            ),
-            Product(
-                id = 6,
-                name = "บลูฮาวายโซดา",
-                price = 30.00,
-                description = "ซ่าถึงใจเด็กไทยชอบทุกคน",
-                imageUrl = "",
-                category = "เครื่องดื่ม",
-                imageResId = R.drawable.bluesoda_makincha
-            ),
+            Product(1,"โกโก้",35.0,"เข้มข้น หวานฉ่ำ","","เครื่องดื่ม",R.drawable.coco_makincha),
+            Product(2,"นมชมพู",30.0,"หอมนม สดชื่น หวานฉ่ำ","","เครื่องดื่ม",R.drawable.nomchompoo),
+            Product(3,"นมเผือก",30.0,"หวานมัน สนชื่น  สดใส","","เครื่องดื่ม",R.drawable.nompurk),
+            Product(4,"เอสเปรสโซ่",30.0,"ปลุกความเป็นชายในตัวคุณ","","เครื่องดื่ม",R.drawable.esspeccso),
+            Product(5,"แอปเปิ้ลโซดา",30.0,"ซ่าได้ทุกที่ ซ่าถึงใจ","","เครื่องดื่ม",R.drawable.apple_soda),
+            Product(6,"บลูฮาวายโซดา",30.0,"ซ่าถึงใจเด็กไทยชอบทุกคน","","เครื่องดื่ม",R.drawable.bluehawai_soda),
+            Product(7, "ลิ้นจี่โซดา", 30.0, "ซ่าจ้าดดดดด", "", "เครื่องดื่ม", R.drawable.linchee_soda),
+            Product(8,"สตอเบอร์รี่โซดา",30.0,"ซ่าถึงใจ","","เครื่องดื่ม", R.drawable.stroberry_soda),
+            Product(9, "ชาเขียว",30.0,"หวานมันอร่อย","","เครื่องดื่ม",R.drawable.greentenn),
+            Product(10, "นมสด",30.0,"หวานมันอร่อย","","เครื่องดื่ม",R.drawable.nomsod),
+            Product(11, "ชานมใต้หวัน",30.0,"หวานมันอร่อย","","เครื่องดื่ม",R.drawable.esspeccso),
+            Product(12, "นมสดคาราเมล",30.0,"หวานมันอร่อย","","เครื่องดื่ม",R.drawable.nomsod)
+
+
+
+
+
         )
     }
 
