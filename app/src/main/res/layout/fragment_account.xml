@@ -35,7 +35,6 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="#000000" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -58,7 +57,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingVertical="12dp">
-
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -66,7 +64,6 @@
                     android:text="ชื่อผู้ใช้"
                     android:textSize="16sp"
                     android:textColor="#000000"/>
-
                 <TextView
                     android:id="@+id/txtAccountName"
                     android:layout_width="wrap_content"
@@ -76,17 +73,13 @@
                     android:textColor="#555555"/>
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#DDDDDD"/>
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#DDDDDD"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingVertical="12dp">
-
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -94,7 +87,6 @@
                     android:text="Bio"
                     android:textSize="16sp"
                     android:textColor="#000000"/>
-
                 <TextView
                     android:id="@+id/txtBio"
                     android:layout_width="wrap_content"
@@ -104,10 +96,7 @@
                     android:textSize="16sp"/>
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#DDDDDD"/>
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#DDDDDD"/>
 
             <LinearLayout
                 android:id="@+id/btnGender"
@@ -115,8 +104,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:paddingVertical="12dp">
-
+                android:paddingVertical="12dp"
+                android:background="?attr/selectableItemBackground">
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -124,7 +113,6 @@
                     android:text="เพศ"
                     android:textSize="16sp"
                     android:textColor="#000000"/>
-
                 <TextView
                     android:id="@+id/txtGender"
                     android:layout_width="wrap_content"
@@ -133,17 +121,13 @@
                     android:textSize="16sp"
                     android:textColor="#555555"
                     android:layout_marginEnd="6dp"/>
-
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_arrow_right"/>
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#DDDDDD"/>
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#DDDDDD"/>
 
             <LinearLayout
                 android:id="@+id/btnBirthday"
@@ -151,8 +135,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:paddingVertical="12dp">
-
+                android:paddingVertical="12dp"
+                android:background="?attr/selectableItemBackground">
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -160,7 +144,6 @@
                     android:text="วันเกิด"
                     android:textSize="16sp"
                     android:textColor="#000000"/>
-
                 <TextView
                     android:id="@+id/txtBirthday"
                     android:layout_width="wrap_content"
@@ -169,24 +152,19 @@
                     android:textSize="16sp"
                     android:textColor="#555555"
                     android:layout_marginEnd="6dp"/>
-
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_arrow_right"/>
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#DDDDDD"/>
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#DDDDDD"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingVertical="12dp">
-
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -194,7 +172,6 @@
                     android:text="เบอร์โทรศัพท์"
                     android:textSize="16sp"
                     android:textColor="#000000"/>
-
                 <TextView
                     android:id="@+id/txtPhone"
                     android:layout_width="wrap_content"
@@ -204,17 +181,13 @@
                     android:textColor="#555555"/>
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#DDDDDD"/>
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#DDDDDD"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingVertical="12dp">
-
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -222,7 +195,6 @@
                     android:text="อีเมล"
                     android:textSize="16sp"
                     android:textColor="#000000"/>
-
                 <TextView
                     android:id="@+id/txtEmail"
                     android:layout_width="wrap_content"
@@ -231,6 +203,18 @@
                     android:textSize="16sp"
                     android:textColor="#555555"/>
             </LinearLayout>
+
+            <Button
+                android:id="@+id/btnGoToHistory"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="32dp"
+                android:text="ประวัติคำสั่งซื้อ"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#EBCE08"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"/>
 
         </LinearLayout>
     </LinearLayout>

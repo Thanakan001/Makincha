@@ -9,8 +9,7 @@ import com.thanakan.makincha.R
 import com.thanakan.makincha.models.NotificationItem
 
 class NotificationAdapter(
-    private val notifications: MutableList<NotificationItem>,
-    private val onDelete: (position: Int) -> Unit
+    private val notifications: MutableList<NotificationItem>
 ) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
 
     inner class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -35,7 +34,16 @@ class NotificationAdapter(
     override fun getItemCount(): Int = notifications.size
 
     fun deleteItem(position: Int) {
-        notifications.removeAt(position)
-        notifyItemRemoved(position)
+        if (position in notifications.indices) {
+            notifications.removeAt(position)
+            notifyItemRemoved(position)
+        }
+    }
+
+    // ฟังก์ชันสำหรับอัปเดตข้อมูลทั้งหมดจาก API
+    fun updateData(newItems: List<NotificationItem>) {
+        notifications.clear()
+        notifications.addAll(newItems)
+        notifyDataSetChanged()
     }
 }

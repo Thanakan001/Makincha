@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.thanakan.makincha.R
 import com.thanakan.makincha.models.CartItem
 
@@ -35,20 +36,35 @@ class CheckoutAdapter(
         holder.txtName.text = item.productName
         holder.txtSweetness.text = "ความหวาน: ${item.sweetness}"
 
-        holder.txtTopping.text = if (item.topping.isNotBlank()) {
-            "ท็อปปิ้ง: ${item.topping} (+฿ ${item.toppingPrice})"
-        } else {
-            "ท็อปปิ้ง: -"
-        }
+        // ✅ topping null-safe
+        val toppingText = item.topping
+            ?.takeIf { it.isNotBlank() }
+            ?.let { "ท็อปปิ้ง: $it (+฿ ${item.toppingPrice})" }
+            ?: "ท็อปปิ้ง: -"
 
-        holder.txtNote.text = "หมายเหตุ: ${if (item.note.isNotBlank()) item.note else "-"}"
-        holder.txtPrice.text = "฿ %.2f".format(item.totalPrice())
-        holder.txtAmount.text = "จำนวน: ${item.amount}"
+        holder.txtTopping.text = toppingText
 
-        if (item.imageResId != 0) {
-            holder.imgProduct.setImageResource(item.imageResId)
+        // ✅ note null-safe
+        holder.txtNote.text =
+            "หมายเหตุ: ${item.note?.takeIf { it.isNotBlank() } ?: "-"}"
+
+        holder.txtPrice.text =
+            "฿ %.2f".format(item.totalPrice())
+
+        holder.txtAmount.text =
+            "จำนวน: ${item.amount}"
+
+        // ✅ imageUrl null-safe
+        val imageName = item.imageUrl.orEmpty()
+
+        if (imageName.isNotBlank()) {
+            Glide.with(holder.itemView.context)
+                .load("http://10.0.2.2/makincha_api/images/$imageName")
+                .placeholder(R.drawable.coco_makincha)
+                .error(R.drawable.coco_makincha)
+                .into(holder.imgProduct)
         } else {
-            holder.imgProduct.setImageResource(R.drawable.coco_makincha) // fallback
+            holder.imgProduct.setImageResource(R.drawable.coco_makincha)
         }
     }
 

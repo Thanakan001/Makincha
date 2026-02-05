@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.thanakan.makincha.R
 import com.thanakan.makincha.models.CartItem
 import com.thanakan.makincha.models.CartManager
@@ -37,13 +38,32 @@ class CartAdapter(
 
         holder.txtName.text = item.productName
         holder.txtSweetness.text = "ความหวาน: ${item.sweetness}"
-        holder.txtTopping.text = "ท็อปปิ้ง: ${item.topping}"
-        holder.txtNote.text = "หมายเหตุ: ${if (item.note.isNotBlank()) item.note else "-"}"
-        holder.txtPrice.text = "฿ %.2f".format(item.totalPrice())
-        holder.txtAmount.text = "จำนวน:${item.amount}"
 
-        if (item.imageResId != 0) holder.imgProduct.setImageResource(item.imageResId)
-        else holder.imgProduct.setImageResource(R.drawable.coco_makincha)
+        // ✅ ป้องกัน null
+        holder.txtTopping.text =
+            "ท็อปปิ้ง: ${item.topping ?: "-"}"
+
+        holder.txtNote.text =
+            "หมายเหตุ: ${item.note?.takeIf { it.isNotBlank() } ?: "-"}"
+
+        holder.txtPrice.text =
+            "฿ %.2f".format(item.totalPrice())
+
+        holder.txtAmount.text =
+            "จำนวน: ${item.amount}"
+
+        // ✅ โหลดรูป (null-safe)
+        val imageName = item.imageUrl.orEmpty()
+
+        if (imageName.isNotBlank()) {
+            Glide.with(holder.itemView.context)
+                .load("http://10.0.2.2/makincha_api/images/$imageName")
+                .placeholder(R.drawable.coco_makincha)
+                .error(R.drawable.coco_makincha)
+                .into(holder.imgProduct)
+        } else {
+            holder.imgProduct.setImageResource(R.drawable.coco_makincha)
+        }
 
         holder.btnRemove.setOnClickListener {
             CartManager.removeFromCart(item)

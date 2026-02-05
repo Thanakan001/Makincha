@@ -1,60 +1,71 @@
 package com.thanakan.makincha.fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.thanakan.makincha.R
+import com.thanakan.makincha.databinding.FragmentHomeBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // ✅ 1. แสดงชื่อผู้ใช้จาก SharedPreferences
+        updateGreeting()
+
+        // ✅ 2. รัน Animation เมื่อเปิดหน้า Fragment
+        startHomeAnimations()
+    }
+
+    private fun startHomeAnimations() {
+        // ตั้งค่าเริ่มต้น: ซ่อน View และเลื่อนลงด้านล่างเล็กน้อย
+        val viewsToAnimate = listOf(
+            binding.searchBarCard,
+            binding.recommendedTitle,
+            binding.menuContainerCard,
+            binding.topBannerCard,
+            binding.bottomBannerCard
+        )
+
+        viewsToAnimate.forEach { view ->
+            view.alpha = 0f
+            view.translationY = 80f
+        }
+
+        // ✅ ทยอยรันอนิเมชั่นทีละส่วน (Staggered Animation)
+        viewsToAnimate.forEachIndexed { index, view ->
+            view.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setDuration(800)
+                .setStartDelay((index * 150).toLong()) // ห่างกันตัวละ 150ms
+                .start()
+        }
+    }
+
+    private fun updateGreeting() {
+        // ดึง SharedPreferences เพื่อแสดงชื่อ User
+        val sharedPref = requireContext().getSharedPreferences("user_pref", Context.MODE_PRIVATE)
+        val username = sharedPref.getString("username", "Guest")
+        binding.greetingText.text = "Hi $username!"
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

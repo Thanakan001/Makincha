@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.thanakan.makincha">
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -11,27 +16,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Makincha">
-        <activity
-            android:name=".activity.SuccessActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.CheckoutActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+
+        <!-- 🔹 Login (หน้าแรกของแอป) -->
         <activity
             android:name=".activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 🔹 MainActivity (สำคัญมาก) -->
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="false" />
+
+        <!-- 🔹 Register -->
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:exported="false" />
+
+        <!-- 🔹 Checkout -->
+        <activity
+            android:name=".activity.CheckoutActivity"
+            android:exported="false" />
+
+        <!-- 🔹 Success -->
+        <activity
+            android:name=".activity.SuccessActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

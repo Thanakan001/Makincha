@@ -1,4 +1,4 @@
-package com.thanakan.makincha.ui
+package com.thanakan.makincha.fragments
 
 import android.content.Intent
 import android.os.Bundle

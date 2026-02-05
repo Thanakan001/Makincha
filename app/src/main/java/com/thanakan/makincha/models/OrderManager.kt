@@ -2,11 +2,11 @@ package com.thanakan.makincha.models
 
 object OrderManager {
 
-    private val orderList = mutableListOf<Order>()
+    private val orderList = mutableListOf<OrderHistory>()
 
-    fun addOrder(order: Order) {
+    fun addOrder(order: OrderHistory) {
         orderList.add(0, order)
     }
 
-    fun getOrders(): List<Order> = orderList
+    fun getOrders(): List<OrderHistory> = orderList
 }

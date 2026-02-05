@@ -3,41 +3,79 @@ package com.thanakan.makincha.models
 object CartManager {
 
     private val cartItems = mutableListOf<CartItem>()
-
     private val listeners = mutableListOf<() -> Unit>()
 
+    /* =========================
+       Cart Logic
+    ========================= */
+
     fun addToCart(item: CartItem, replaceAmount: Boolean = false) {
-        val existing = cartItems.find {
-            it.productName == item.productName &&
+
+        val index = cartItems.indexOfFirst {
+            it.productId == item.productId &&
                     it.sweetness == item.sweetness &&
                     it.topping == item.topping &&
                     it.note == item.note
         }
-        if (existing != null) {
-            if (replaceAmount) existing.amount = item.amount
-            else existing.amount += item.amount
+
+        if (index != -1) {
+            val existing = cartItems[index]
+
+            val newAmount =
+                if (replaceAmount) {
+                    item.amount
+                } else {
+                    existing.amount + item.amount
+                }
+
+            // ✅ สร้าง object ใหม่แทนการแก้ val
+            cartItems[index] = existing.copy(
+                amount = newAmount
+            )
+
         } else {
-            cartItems.add(item)
+            cartItems.add(item.copy())
         }
+
         notifyListeners()
     }
 
     fun removeFromCart(item: CartItem) {
-        cartItems.remove(item)
+        cartItems.removeAll {
+            it.productId == item.productId &&
+                    it.sweetness == item.sweetness &&
+                    it.topping == item.topping &&
+                    it.note == item.note
+        }
         notifyListeners()
     }
-
-    fun getCartItems(): List<CartItem> = cartItems
-
-    fun getTotalItemCount(): Int = cartItems.sumOf { it.amount }
 
     fun clearCart() {
         cartItems.clear()
         notifyListeners()
     }
 
+    /* =========================
+       Getter
+    ========================= */
+
+    fun getCartItems(): List<CartItem> =
+        cartItems.map { it.copy() }
+
+    fun getTotalItemCount(): Int =
+        cartItems.sumOf { it.amount }
+
+    fun isEmpty(): Boolean =
+        cartItems.isEmpty()
+
+    /* =========================
+       Listener
+    ========================= */
+
     fun addListener(listener: () -> Unit) {
-        listeners.add(listener)
+        if (!listeners.contains(listener)) {
+            listeners.add(listener)
+        }
     }
 
     fun removeListener(listener: () -> Unit) {
@@ -45,6 +83,6 @@ object CartManager {
     }
 
     private fun notifyListeners() {
-        listeners.forEach { it.invoke() }
+        listeners.toList().forEach { it.invoke() }
     }
 }

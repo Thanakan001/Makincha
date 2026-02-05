@@ -10,29 +10,41 @@
         android:name="com.thanakan.makincha.fragments.HomeFragment"
         android:label="หน้าหลัก"
         tools:layout="@layout/fragment_home" />
+
     <fragment
         android:id="@+id/productFragment"
         android:name="com.thanakan.makincha.fragments.ProductFragment"
         android:label="หน้าสินค้า"
         tools:layout="@layout/fragment_product" />
+
     <fragment
         android:id="@+id/cartFragment"
-        android:name="com.thanakan.makincha.ui.CartFragment"
+        android:name="com.thanakan.makincha.fragments.CartFragment"
         android:label="ตะกร้าสินค้า"
         tools:layout="@layout/fragment_cart" />
+
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.thanakan.makincha.fragments.NotificationFragment"
-        android:label="หน้าแจ้งเตือน"
+        android:label="แจ้งเตือน"
         tools:layout="@layout/fragment_notification" />
+
     <fragment
         android:id="@+id/accountFragment"
-        android:name="com.thanakan.makincha.fragments.FragmentAccount"
-        android:label="หน้าบัญชีของฉัน"
-        tools:layout="@layout/fragment_account" />
+        android:name="com.thanakan.makincha.fragments.AccountFragment"
+        android:label="บัญชีของฉัน"
+        tools:layout="@layout/fragment_account">
+
+        <!-- ACTION ไปหน้าประวัติ -->
+        <action
+            android:id="@+id/action_accountFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
+    </fragment>
+
     <fragment
-        android:id="@+id/abountFragment"
+        android:id="@+id/historyFragment"
         android:name="com.thanakan.makincha.fragments.HistoryFragment"
         android:label="ประวัติคำสั่งซื้อ"
         tools:layout="@layout/fragment_history" />
+
 </navigation>
